@@ -21,7 +21,7 @@ Movie _$MovieFromJson(Map<String, dynamic> json) {
     json['year'] as String,
     json['created_at'] as String,
     json['updated_at'] as String,
-    json['views'] as String,
+    json['views'] as int,
     json['type'] as String,
   );
 }

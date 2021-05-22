@@ -1,47 +1,28 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:movie_app/constant/constants.dart';
 
 class ApiRequest {
-  final String BASE_URL = 'http://training-movie.bsp.vn:82/';
-  final String TOKEN_KEY = 'app_token';
-  final String TOKEN = 'dCuW7UQMbdvpcBDfzolAOSGFIcAec11a';
-  final String url;
-  final Map<String, dynamic> data;
 
-  ApiRequest(@required this.url, this.data);
+  // final String url;
+  // final Map<String, dynamic> data;
+
+  ApiRequest();
 
   Dio _dio() {
     return Dio(BaseOptions(
-        baseUrl: BASE_URL,
+        baseUrl: Constants.BASE_URL,
         headers: {
-          TOKEN_KEY: TOKEN,
+          Constants.TOKEN_KEY: Constants.TOKEN,
         }
     ));
   }
 
-  void get({
-    Function()? onStart,
-    Function(dynamic data)? onSuccess,
-    Function(dynamic error)? onError,
-  }) {
-    _dio().get(this.url, queryParameters: this.data).then((res) =>
-    {
-      if (onSuccess != null) onSuccess(res.data)
-    }).catchError((error) {
-      if (onError != null) onError(error);
-    });
+  Future<Response> get(String url, Map<String, dynamic>? data) async {
+    return await _dio().get(url, queryParameters: data);
   }
 
-  void post({
-    Function()? onStart,
-    Function(dynamic data)? onSuccess,
-    Function(dynamic error)? onError,
-  }) {
-    _dio().post(this.url, queryParameters: this.data).then((res) =>
-    {
-      if (onSuccess != null) onSuccess(res.data)
-    }).catchError((error) {
-      if (onError != null) onError(error);
-    });
+  Future<Response> post(String url, Map<String, dynamic>? data) async {
+    return await _dio().post(url, queryParameters: data);
   }
 }

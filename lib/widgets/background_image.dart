@@ -12,7 +12,7 @@ class BackgroundImage extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: NetworkImage("https://wallpapercave.com/wp/wp4768945.jpg"),
+                image: NetworkImage("https://cdn.wallpapersafari.com/96/17/1o9fX8.jpg"),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken)
             )

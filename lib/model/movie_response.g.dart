@@ -12,7 +12,7 @@ MovieResponse _$MovieResponseFromJson(Map<String, dynamic> json) {
     json['code'] as int,
     json['message'] as String,
     Paging.fromJson(json['paging'] as Map<String, dynamic>),
-    (json['listMovie'] as List<dynamic>)
+    (json['data'] as List<dynamic>)
         .map((e) => Movie.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
@@ -24,5 +24,5 @@ Map<String, dynamic> _$MovieResponseToJson(MovieResponse instance) =>
       'code': instance.code,
       'message': instance.message,
       'paging': instance.paging,
-      'listMovie': instance.listMovie,
+      'data': instance.listMovie,
     };

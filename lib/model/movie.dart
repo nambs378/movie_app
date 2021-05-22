@@ -44,7 +44,7 @@ class Movie {
   String updated_at;
 
   @JsonValue('views')
-  String views;
+  int views;
 
   @JsonValue('type')
   String type;

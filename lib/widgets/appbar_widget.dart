@@ -9,7 +9,7 @@ class AppbarWidget extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Style.Colors.appbarColor
+            color: Style.MyColors.appbarColor
           ),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.07,
@@ -18,7 +18,7 @@ class AppbarWidget extends StatelessWidget {
               "HFILM",
               textAlign: TextAlign.center,
               style: GoogleFonts.oswald(
-                color: Style.Colors.titleColor,
+                color: Style.MyColors.titleColor,
                 fontSize: 35,
                 fontWeight: FontWeight.bold,
               ),
@@ -27,7 +27,7 @@ class AppbarWidget extends StatelessWidget {
         ),
         Divider(
           height: 1,
-          color: Style.Colors.dividerColor,
+          color: Style.MyColors.dividerColor,
         )
 
       ],

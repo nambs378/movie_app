@@ -35,6 +35,7 @@ dependencies:
   rxdart: ^0.27.0
   json_serializable: ^4.1.2
   analyzer: ^1.5.0
+  eva_icons_flutter: ^3.0.0
 
 dev_dependencies:
   flutter_test:
