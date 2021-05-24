@@ -10,5 +10,6 @@ class MyColors {
   static const Color buttonOrange = const Color(0xfffc7b46);
   static const Color orange = const Color(0xfffc7b46);
   static const Color white = const Color(0xffffffff);
+  static const Color black = const Color(0xff000000);
 
 }

@@ -36,6 +36,9 @@ dependencies:
   json_serializable: ^4.1.2
   analyzer: ^1.5.0
   eva_icons_flutter: ^3.0.0
+  equatable: ^2.0.2
+  flutter_bloc: ^7.0.0
+  youtube_player_flutter: ^8.0.0
 
 dev_dependencies:
   flutter_test:

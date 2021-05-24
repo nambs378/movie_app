@@ -3,6 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/constant/Themes.dart' as Style;
 
 class AppbarWidget extends StatelessWidget {
+
+  final String title;
+
+  const AppbarWidget({Key? key, this.title = "HFILM"}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -15,7 +20,7 @@ class AppbarWidget extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.07,
           child: Center(
             child: Text(
-              "HFILM",
+              title,
               textAlign: TextAlign.center,
               style: GoogleFonts.oswald(
                 color: Style.MyColors.titleColor,
@@ -29,7 +34,6 @@ class AppbarWidget extends StatelessWidget {
           height: 1,
           color: Style.MyColors.dividerColor,
         )
-
       ],
     );
   }

@@ -8,12 +8,14 @@ part of 'movie_response.dart';
 
 MovieResponse _$MovieResponseFromJson(Map<String, dynamic> json) {
   return MovieResponse(
-    json['error'] as bool,
-    json['code'] as int,
-    json['message'] as String,
-    Paging.fromJson(json['paging'] as Map<String, dynamic>),
-    (json['data'] as List<dynamic>)
-        .map((e) => Movie.fromJson(e as Map<String, dynamic>))
+    json['error'] as bool?,
+    json['code'] as int?,
+    json['message'] as String?,
+    json['paging'] == null
+        ? null
+        : Paging.fromJson(json['paging'] as Map<String, dynamic>),
+    (json['data'] as List<dynamic>?)
+        ?.map((e) => Movie.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }

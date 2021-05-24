@@ -6,19 +6,17 @@ import 'package:movie_app/network/api_request.dart';
 class MovieRepository {
   final ApiRequest _apiRequest = ApiRequest();
 
-  void getMovie(String url, int page, int perPage,
-      Function() onStart,
-      Function(Map<String, dynamic> data) onSuccess,
-      Function(Error error) onError,
-      )  {
+  Future<MovieResponse> getMovie(int page, int perPage,
+      ) async {
     var params = {'page': page, 'perPage': perPage};
-    onStart();
-    _apiRequest.get(Constants.URL_GET_MOVIE, params).then((res) =>
-    {
-      onSuccess(res.data)
-    }).catchError((error) {
-      onError(error);
-    });
+    try{
+      Response response = await _apiRequest.get(Constants.URL_GET_MOVIE, params);
+      return MovieResponse.fromJson(response.data);
+    } catch (error, stacktrace){
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return MovieResponse.withError("Connection issue", true);
+    }
   }
 
 }
+class NetworkError extends Error {}

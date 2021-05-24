@@ -7,20 +7,20 @@ part 'movie_response.g.dart';
 @JsonSerializable()
 class MovieResponse{
 
-  @JsonValue('error')
-  bool error;
+  @JsonKey(name: 'error')
+  bool? error;
 
-  @JsonValue('code')
-  int code;
+  @JsonKey(name: 'code')
+  int? code;
 
-  @JsonValue('message')
-  String message;
+  @JsonKey(name: 'message')
+  String? message;
 
-  @JsonValue('paging')
-  Paging paging;
+  @JsonKey(name: 'paging')
+  Paging? paging;
 
-  @JsonValue('data')
-  List<Movie> listMovie;
+  @JsonKey(name: 'data')
+  List<Movie>? listMovie;
 
   MovieResponse(
       this.error,
@@ -31,4 +31,10 @@ class MovieResponse{
 
   factory MovieResponse.fromJson(Map<String, dynamic> json) => _$MovieResponseFromJson(json);
   Map<String, dynamic> toJson() => _$MovieResponseToJson(this);
+
+  MovieResponse.withError(String errorMessage, bool error) {
+    message = errorMessage;
+    this.error = error;
+  }
+
 }

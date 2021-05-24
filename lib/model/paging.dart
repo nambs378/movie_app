@@ -5,16 +5,16 @@ part 'paging.g.dart';
 @JsonSerializable()
 class Paging{
 
-  @JsonValue('total_item')
+  @JsonKey(name: 'total_item')
   int totalItem;
 
-  @JsonValue('per_page')
+  @JsonKey(name: 'per_page')
   int perPage;
 
-  @JsonValue('current_page')
+  @JsonKey(name: 'current_page')
   int currentPage;
 
-  @JsonValue('total_pages')
+  @JsonKey(name: 'total_pages')
   int totalPages;
 
   Paging(this.totalItem,
