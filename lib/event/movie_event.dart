@@ -14,3 +14,11 @@ class GetMovieList extends MovieEvent {
   @override
   List<Object?> get props => [page, perPage];
 }
+
+class SaveMovieFavorite extends MovieEvent {
+  final int idMovie;
+
+  SaveMovieFavorite(this.idMovie);
+  @override
+  List<Object?> get props => [idMovie];
+}

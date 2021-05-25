@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BackgroundImage extends StatelessWidget {
+  final String urlImage;
+
+  const BackgroundImage({Key? key, required this.urlImage}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ShaderMask(shaderCallback: (bounds) => LinearGradient(
@@ -12,7 +15,7 @@ class BackgroundImage extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: NetworkImage("https://cdn.wallpapersafari.com/96/17/1o9fX8.jpg"),
+                image: NetworkImage(urlImage),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken)
             )

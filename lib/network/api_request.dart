@@ -4,9 +4,6 @@ import 'package:movie_app/constant/constants.dart';
 
 class ApiRequest {
 
-  // final String url;
-  // final Map<String, dynamic> data;
-
   ApiRequest();
 
   Dio _dio() {

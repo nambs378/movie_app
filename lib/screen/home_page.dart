@@ -4,6 +4,7 @@ import 'package:movie_app/bloc/movie_bloc.dart';
 import 'package:movie_app/constant/Themes.dart' as Style;
 import 'package:movie_app/constant/Themes.dart';
 import 'package:movie_app/constant/constants.dart';
+import 'package:movie_app/constant/my_share_preferences.dart';
 import 'package:movie_app/event/movie_event.dart';
 import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/model/movie_response.dart';
@@ -13,15 +14,18 @@ import 'package:movie_app/widgets/background_image.dart';
 import 'package:movie_app/widgets/movie_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomePage extends StatefulWidget {
+  static const routeName = '/';
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   late MovieBloc _movieBloc = MovieBloc();
   ScrollController _scrollController = ScrollController();
+  List<String> favoriteList = [];
 
   int currentPage = 1;
   int totalPage = 0;
@@ -29,19 +33,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _getMovieFavorite();
     _movieBloc.add(GetMovieList(currentPage, Constants.PER_PAGE));
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         print("Scroll bottom");
         print(" currentPage : $currentPage, totalPage : $totalPage");
-
         _getMoreMovie();
-
       }
     });
+  }
+
+  _getMovieFavorite() {
+    MySharedPreferences.instance
+        .getListStringValue(Constants.PREF_MOVIE_FAVORITE_KEY)
+        .then((value) => favoriteList = value);
   }
 
   _getMoreMovie() {
@@ -51,20 +59,19 @@ class _HomeScreenState extends State<HomeScreen> {
       _movieBloc.add(GetMovieList(currentPage, Constants.PER_PAGE));
     }
   }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _movieBloc.close();
     _scrollController.dispose();
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        BackgroundImage(),
+        BackgroundImage(urlImage: "https://cdn.wallpapersafari.com/85/51/cY6q3g.jpg",),
         Scaffold(
             backgroundColor: Colors.transparent,
             body: Container(
@@ -95,7 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           movieList.clear();
                           _movieBloc.loading.add(false);
                           return _buildErrorWidget(state.message, context);
+                        } else if (state is MovieStateFavorite) {
+                          favoriteList = state.favorite;
                         }
+
                         return Container(
                           child: ListView.builder(
                             controller: _scrollController,
@@ -104,19 +114,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemBuilder: (context, index) {
                               if (index == movieList.length) {
                                 return Visibility(
-                                  visible: (currentPage == totalPage && currentPage != 1) ? false : true,
+                                  visible: (currentPage == totalPage &&
+                                          currentPage != 1)
+                                      ? false
+                                      : true,
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 100,
                                     child: Center(
-                                        child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(),
                                     ),
                                   ),
                                 );
                               }
-                              return MovieItem(movie: movieList[index], likeClicked: () {
-                                print("clicked $index");
-                              },);
+                              return MovieItem(
+                                movie: movieList[index],
+                                favorited: favoriteList,
+                                likeClicked: () {
+                                  _movieBloc.add(
+                                      SaveMovieFavorite(movieList[index].id));
+                                },
+                              );
                             },
                           ),
                         );
@@ -142,52 +160,47 @@ class _HomeScreenState extends State<HomeScreen> {
   _buildErrorWidget(String error, BuildContext context) {
     return Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Error occured: $error",
-              style: TextStyle(color: Colors.white),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-                child: InkWell(
-                  onTap: () {
-                    currentPage = 1;
-                    _movieBloc.add(GetMovieList(currentPage, Constants.PER_PAGE));
-                  },
-                  splashColor: Style.MyColors.white,
-                  child: Container(
-                    width:
-                    MediaQuery.of(context).size.width * 0.3,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        color: MyColors.buttonOrange),
-                    child: Center(
-                      child: Text(
-                        "Try again",
-                        style: TextStyle(
-                            color: MyColors.textWhite,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Error occured: $error",
+          style: TextStyle(color: Colors.white),
+        ),
+        Container(
+            margin: EdgeInsets.only(top: 15),
+            child: InkWell(
+              onTap: () {
+                currentPage = 1;
+                _movieBloc.add(GetMovieList(currentPage, Constants.PER_PAGE));
+              },
+              splashColor: Style.MyColors.white,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: 30,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(3),
+                    color: MyColors.buttonOrange),
+                child: Center(
+                  child: Text(
+                    "Try again",
+                    style: TextStyle(
+                        color: MyColors.textWhite,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
                   ),
-                )
-            )
-          ],
-        ));
+                ),
+              ),
+            ))
+      ],
+    ));
   }
-
 }
-
 
 class ProgressDialogPrimary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery
-        .of(context)
-        .platformBrightness == Brightness.light;
+    var brightness =
+        MediaQuery.of(context).platformBrightness == Brightness.light;
     ;
     return Scaffold(
       body: Center(
@@ -195,9 +208,10 @@ class ProgressDialogPrimary extends StatelessWidget {
           valueColor: new AlwaysStoppedAnimation<Color>(Style.MyColors.orange),
         ),
       ),
-      backgroundColor: brightness ? Style.MyColors.white.withOpacity(
-          0.40) : Style.MyColors.black.withOpacity(
-          0.40), // this is the main reason of transparency at next screen. I am ignoring rest implementation but what i have achieved is you can see.
+      backgroundColor: brightness
+          ? Style.MyColors.white.withOpacity(0.40)
+          : Style.MyColors.black.withOpacity(
+              0.40), // this is the main reason of transparency at next screen. I am ignoring rest implementation but what i have achieved is you can see.
     );
   }
 }

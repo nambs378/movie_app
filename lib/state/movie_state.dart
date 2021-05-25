@@ -30,3 +30,10 @@ class MovieStateError extends MovieState {
   @override
   List<Object> get props => [message];
 }
+
+class MovieStateFavorite extends MovieState {
+  final List<String> favorite;
+  const MovieStateFavorite(this.favorite);
+  @override
+  List<Object> get props => [favorite];
+}

@@ -10,5 +10,6 @@ class Constants {
 
   static const int PER_PAGE = 10;
 
+  static const String PREF_MOVIE_FAVORITE_KEY = "pref_movie_favorite_key";
 }
 

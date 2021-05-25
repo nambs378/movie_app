@@ -13,8 +13,9 @@ import 'dart:async';
 class MovieItem extends StatelessWidget {
   final Movie movie;
   final Function likeClicked;
+  final List<String> favorited;
 
-  const MovieItem({Key? key, required this.movie, required this.likeClicked}) : super(key: key);
+  const MovieItem({Key? key, required this.movie, required this.likeClicked, required this.favorited}) : super(key: key);
 
 
   Future<ui.Image> _getImage() {
@@ -31,6 +32,7 @@ class MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool liked = (favorited.contains(movie.id.toString()));
     return Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(12),
@@ -129,13 +131,13 @@ class MovieItem extends StatelessWidget {
                                             children: [
                                               Icon(
                                                 Icons.anchor_rounded,
-                                                color: MyColors.white,
+                                                color: liked ?  MyColors.orange : MyColors.white,
                                                 size: 14,
                                               ),
                                               TextCustomWidget(
-                                                  value: "Thích",
+                                                  value: liked  ? "Đã thích" : "Thích",
                                                   size: 14,
-                                                  color: MyColors.textWhite,
+                                                  color: liked  ?  MyColors.textOrange : MyColors.textWhite,
                                                   edgeInsets: EdgeInsets.only(left: 3))
                                             ],
                                           ),
@@ -157,8 +159,10 @@ class MovieItem extends StatelessWidget {
                                           color: MyColors.buttonOrange),
                                       child: InkWell(
                                         onTap: () {
-                                          Navigator.push(
-                                              context, MaterialPageRoute(builder: (context) => MovieDetailPage(movie: movie)));
+                                          print("xem phim clicked");
+                                          // Navigator.push(
+                                          //     context, MaterialPageRoute(builder: (context) => MovieDetailPage(movie: movie)));
+                                          Navigator.pushNamed(context, MovieDetailPage.routeName, arguments: [movie, liked]);
                                         },
                                         splashColor: MyColors.white.withOpacity(0.3),
                                         child: Container(
