@@ -1,0 +1,18 @@
+{"protocolVersion":"0.1.1","runnerVersion":null,"pid":19036,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"D:\\Project\\Mobile\\Flutter Project\\movie_app\\test\\home_page_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading D:\\Project\\Mobile\\Flutter Project\\movie_app\\test\\home_page_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"D:\\Project\\Mobile\\Flutter Project\\movie_app\\test\\repository_test.dart"},"type":"suite","time":9}
+{"test":{"id":3,"name":"loading D:\\Project\\Mobile\\Flutter Project\\movie_app\\test\\repository_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":9}
+{"suite":{"id":4,"platform":"vm","path":"D:\\Project\\Mobile\\Flutter Project\\movie_app\\test\\widget_test.dart"},"type":"suite","time":11}
+{"test":{"id":5,"name":"loading D:\\Project\\Mobile\\Flutter Project\\movie_app\\test\\widget_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":11}
+{"count":3,"type":"allSuites","time":11}
+
+[{"event":"test.startedProcess","params":{"observatoryUri":"http://127.0.0.1:50245/ZBOMf8F51cY=/"}}]
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1528}
+
+[{"event":"test.startedProcess","params":{"observatoryUri":"http://127.0.0.1:50254/0Gj2ebDv4fg=/"}}]
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1713}
+
+[{"event":"test.startedProcess","params":{"observatoryUri":"http://127.0.0.1:50260/iYOXNVYpNqI=/"}}]
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1938}
+{"success":true,"type":"done","time":2460}

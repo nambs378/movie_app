@@ -154,7 +154,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                             TextCustomWidget(
                                                 value:
                                                     "Lượt xem: ${widget.movie.views}",
-                                                size: 16,
+                                                size: 14,
                                                 color: MyColors.textOrange,
                                                 edgeInsets:
                                                     EdgeInsets.only(top: 10),
@@ -181,7 +181,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                             _RichTextCustom(
                                                 EdgeInsets.only(top: 10),
                                                 "Duration",
-                                                widget.movie.duration ??
+                                                "${widget.movie.duration} phút" ??
                                                     "empty"),
                                             Container(
                                               margin: EdgeInsets.only(top: 15),
@@ -189,17 +189,18 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                                 child: Row(
                                                   children: [
                                                     Icon(
-                                                      Icons.anchor_rounded,
-                                                      color: widget.liked
-                                                          ? MyColors.orange
-                                                          : MyColors.white,
-                                                      size: 14,
+                                                      widget.liked
+                                                          ? Icons.favorite
+                                                          : Icons
+                                                          .favorite_outline,
+                                                      color: MyColors.orange,
+                                                      size: 13,
                                                     ),
                                                     TextCustomWidget(
                                                         value: widget.liked
-                                                            ? "Đã thích"
-                                                            : "Thích",
-                                                        size: 14,
+                                                            ? "Liked"
+                                                            : "Like",
+                                                        size: 13,
                                                         color: widget.liked
                                                             ? MyColors
                                                                 .textOrange
@@ -324,7 +325,7 @@ Widget _RichTextCustom(EdgeInsets edgeInsets, String title, String value) =>
               text: "$title: ",
               style: TextStyle(
                   color: MyColors.textWhite,
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold)),
           TextSpan(
               text: "$value",
