@@ -19,7 +19,9 @@ class MovieDetailPage extends StatefulWidget {
   static const routeName = '/detail';
   final Movie movie;
   final bool liked;
-  const MovieDetailPage({Key? key, required this.movie, required this.liked}) : super(key: key);
+
+  const MovieDetailPage({Key? key, required this.movie, required this.liked})
+      : super(key: key);
 
   @override
   _MovieDetailPageState createState() => _MovieDetailPageState();
@@ -71,7 +73,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
     return Stack(
       children: [
-        BackgroundImage(urlImage: "https://cdn.wallpapersafari.com/85/51/cY6q3g.jpg",),
+        BackgroundImage(
+          urlImage: "https://cdn.wallpapersafari.com/85/51/cY6q3g.jpg",
+        ),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
@@ -82,7 +86,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                   children: [
                     AppbarWidget(
                       title:
-                          "${_stringHandle(widget.movie.title, "/")[0].trim()}",
+                          "Detail",
+                      textColor: MyColors.textWhite,
+                      appbarColor: MyColors.orange,
                     ),
                     Expanded(
                       child: SingleChildScrollView(
@@ -96,7 +102,8 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                   Expanded(
                                     flex: 40,
                                     child: Container(
-                                        margin: EdgeInsets.only(right: horizontalScreenPadding),
+                                        margin: EdgeInsets.only(
+                                            right: horizontalScreenPadding),
                                         child: FutureBuilder<ui.Image>(
                                           future: _getImage(),
                                           builder: (context, snapshot) {
@@ -155,23 +162,27 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                             _RichTextCustom(
                                                 EdgeInsets.only(top: 15),
                                                 "Genres",
-                                                widget.movie.category??"empty"),
+                                                widget.movie.category ??
+                                                    "empty"),
                                             _RichTextCustom(
                                                 EdgeInsets.only(top: 10),
                                                 "Actor",
-                                                widget.movie.actor??"empty"),
+                                                widget.movie.actor ?? "empty"),
                                             _RichTextCustom(
                                                 EdgeInsets.only(top: 10),
                                                 "Director",
-                                                widget.movie.director??"empty"),
+                                                widget.movie.director ??
+                                                    "empty"),
                                             _RichTextCustom(
                                                 EdgeInsets.only(top: 10),
                                                 "Manufacturer",
-                                                widget.movie.manufacturer??"empty"),
+                                                widget.movie.manufacturer ??
+                                                    "empty"),
                                             _RichTextCustom(
                                                 EdgeInsets.only(top: 10),
                                                 "Duration",
-                                                widget.movie.duration??"empty"),
+                                                widget.movie.duration ??
+                                                    "empty"),
                                             Container(
                                               margin: EdgeInsets.only(top: 15),
                                               child: Container(
@@ -179,14 +190,24 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                                   children: [
                                                     Icon(
                                                       Icons.anchor_rounded,
-                                                      color: widget.liked ?  MyColors.orange : MyColors.white,
+                                                      color: widget.liked
+                                                          ? MyColors.orange
+                                                          : MyColors.white,
                                                       size: 14,
                                                     ),
                                                     TextCustomWidget(
-                                                        value: widget.liked  ? "Đã thích" : "Thích",
+                                                        value: widget.liked
+                                                            ? "Đã thích"
+                                                            : "Thích",
                                                         size: 14,
-                                                        color: widget.liked  ?  MyColors.textOrange : MyColors.textWhite,
-                                                        edgeInsets: EdgeInsets.only(left: 3))
+                                                        color: widget.liked
+                                                            ? MyColors
+                                                                .textOrange
+                                                            : MyColors
+                                                                .textWhite,
+                                                        edgeInsets:
+                                                            EdgeInsets.only(
+                                                                left: 3))
                                                   ],
                                                 ),
                                               ),
@@ -218,8 +239,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(bottom: 10,top: 10),
-                            padding: EdgeInsets.symmetric(horizontal: horizontalScreenPadding),
+                            margin: EdgeInsets.only(bottom: 10, top: 10),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: horizontalScreenPadding),
                             child: Divider(
                                 color: MyColors.dividerColor, height: 1),
                           ),
@@ -230,7 +252,8 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                               size: 17,
                               color: MyColors.textOrange,
                               bold: true,
-                              edgeInsets: EdgeInsets.only(bottom: 10, left: horizontalScreenPadding),
+                              edgeInsets: EdgeInsets.only(
+                                  bottom: 10, left: horizontalScreenPadding),
                             ),
                           ),
                           Container(
@@ -290,8 +313,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
       ),
     );
   }
-
-
 }
 
 Widget _RichTextCustom(EdgeInsets edgeInsets, String title, String value) =>

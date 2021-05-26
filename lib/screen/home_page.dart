@@ -72,6 +72,11 @@ class _HomePageState extends State<HomePage> {
     return Stack(
       children: [
         BackgroundImage(urlImage: "https://cdn.wallpapersafari.com/85/51/cY6q3g.jpg",),
+        // Container(
+        //   width: MediaQuery.of(context).size.width,
+        //   height: MediaQuery.of(context).size.height,
+        //   color: MyColors.gray,
+        // ),
         Scaffold(
             backgroundColor: Colors.transparent,
             body: Container(

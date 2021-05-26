@@ -15,8 +15,12 @@ class MovieItem extends StatelessWidget {
   final Function likeClicked;
   final List<String> favorited;
 
-  const MovieItem({Key? key, required this.movie, required this.likeClicked, required this.favorited}) : super(key: key);
-
+  const MovieItem(
+      {Key? key,
+      required this.movie,
+      required this.likeClicked,
+      required this.favorited})
+      : super(key: key);
 
   Future<ui.Image> _getImage() {
     Completer<ui.Image> completer = new Completer<ui.Image>();
@@ -33,170 +37,212 @@ class MovieItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool liked = (favorited.contains(movie.id.toString()));
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 31,
-                  child: Container(
-                      margin: EdgeInsets.only(right: 12),
-                      child: FutureBuilder<ui.Image>(
-                        future: _getImage(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            ui.Image? image = snapshot.data;
-                            if (image != null) {
-                              return AspectRatio(
-                                aspectRatio: image.width / image.height,
-                                child: Container(
-                                  color: Colors.black,
-                                  child: Image(
-                                    image: NetworkImage(movie.image),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return Container();
-                            }
-                          } else {
-                            return Center(
-                              child: Text(
-                                'Loading...',
-                                style: TextStyle(color: MyColors.textWhite),
-                              ),
-                            );
-                          }
-                        },
-                      )),
-                ),
-                Expanded(
-                    flex: 69,
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextCustomWidget(
-                              value: movie.title,
-                              size: 14,
-                              color: MyColors.textOrange,
-                              bold: true),
-                          TextCustomWidget(
-                              value: movie.title,
-                              size: 14,
-                              color: MyColors.textWhite,
-                              bold: true,
-                              edgeInsets: EdgeInsets.only(top: 10)),
-                          TextCustomWidget(
-                              value: "Lượt xem: ${movie.views}",
-                              size: 14,
-                              color: MyColors.textWhite,
-                              edgeInsets: EdgeInsets.only(top: 10),
-                              italic: true),
-                          TextCustomWidget(
-                              value: "${movie.description}",
-                              size: 14,
-                              color: MyColors.textWhite,
-                              edgeInsets: EdgeInsets.only(top: 15),
-                              line: 5),
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(5)),
+      child: Material(
+        color: MyColors.buttonOrange.withOpacity(0),
+        child: Ink(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
+          child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, MovieDetailPage.routeName, arguments: [movie, liked]);
+              },
+              splashColor: MyColors.orange.withOpacity(0.5),
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        width: MediaQuery.of(context).size.width,
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.62,
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-
-                                ClipRRect(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                                  child: Material(
-                                    color: MyColors.buttonOrange.withOpacity(0),
-
-                                    child: Ink(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(3)),
-                                      child: InkWell(
-                                        onTap: () {
-                                          likeClicked();
-                                        },
-                                        splashColor: MyColors.white.withOpacity(0.3),
-                                        child: Container(
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.anchor_rounded,
-                                                color: liked ?  MyColors.orange : MyColors.white,
-                                                size: 14,
+                                TextCustomWidget(
+                                    value: movie.title,
+                                    size: 15,
+                                    color: MyColors.black,
+                                    bold: true),
+                                TextCustomWidget(
+                                    value: "${movie.description}",
+                                    size: 13,
+                                    color: MyColors.textGray,
+                                    edgeInsets: EdgeInsets.only(top: 7),
+                                    line: 3),
+                                Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                        child: Material(
+                                          color: MyColors.buttonOrange
+                                              .withOpacity(0),
+                                          child: Ink(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(3)),
+                                            child: InkWell(
+                                              onTap: () {
+                                                likeClicked();
+                                              },
+                                              splashColor: MyColors.white
+                                                  .withOpacity(0.3),
+                                              child: Container(
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons
+                                                          .remove_red_eye_rounded,
+                                                      color: MyColors.orange,
+                                                      size: 13,
+                                                    ),
+                                                    TextCustomWidget(
+                                                        value: "${movie.views}",
+                                                        size: 13,
+                                                        color:
+                                                            MyColors.textGray,
+                                                        edgeInsets:
+                                                            EdgeInsets.only(
+                                                                left: 3)),
+                                                  ],
+                                                ),
                                               ),
-                                              TextCustomWidget(
-                                                  value: liked  ? "Đã thích" : "Thích",
-                                                  size: 14,
-                                                  color: liked  ?  MyColors.textOrange : MyColors.textWhite,
-                                                  edgeInsets: EdgeInsets.only(left: 3))
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  child: Material(
-                                    color: MyColors.buttonOrange,
-
-                                    child: Ink(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(3),
-                                          color: MyColors.buttonOrange),
-                                      child: InkWell(
-                                        onTap: () {
-                                          print("xem phim clicked");
-                                          // Navigator.push(
-                                          //     context, MaterialPageRoute(builder: (context) => MovieDetailPage(movie: movie)));
-                                          Navigator.pushNamed(context, MovieDetailPage.routeName, arguments: [movie, liked]);
-                                        },
-                                        splashColor: MyColors.white.withOpacity(0.3),
-                                        child: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.3,
-                                          height: 30,
-                                          child: Center(
-                                            child: Text(
-                                              "Xem phim",
-                                              style: TextStyle(
-                                                  color: MyColors.textWhite,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                        child: Container(
+                                          width: 70,
+                                          alignment: Alignment.centerLeft,
+                                          child: Material(
+                                            color: MyColors.buttonOrange
+                                                .withOpacity(0),
+                                            child: Ink(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(3)),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  likeClicked();
+                                                },
+                                                splashColor: MyColors.white
+                                                    .withOpacity(0.3),
+                                                child: Container(
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        liked
+                                                            ? Icons.favorite
+                                                            : Icons
+                                                                .favorite_outline,
+                                                        color: MyColors.orange,
+                                                        size: 13,
+                                                      ),
+                                                      TextCustomWidget(
+                                                          value: liked
+                                                              ? "Liked"
+                                                              : "Like",
+                                                          size: 13,
+                                                          color: liked
+                                                              ? MyColors
+                                                                  .textOrange
+                                                              : MyColors
+                                                                  .textGray,
+                                                          edgeInsets:
+                                                              EdgeInsets.only(
+                                                                  left: 3))
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 )
                               ],
                             ),
-                          )
-                        ],
+                          ),
+                        ),
                       ),
-                    ))
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              child: Divider(color: MyColors.dividerColor, height: 1),
-            )
-          ],
-        ));
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          padding: EdgeInsets.only(right: 10),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            child: Container(
+                                child: FutureBuilder<ui.Image>(
+                              future: _getImage(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  ui.Image? image = snapshot.data;
+                                  if (image != null) {
+                                    return AspectRatio(
+                                      aspectRatio: image.width / image.height,
+                                      child: Container(
+                                        color: Colors.black,
+                                        child: Image(
+                                          image: NetworkImage(movie.image),
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                } else {
+                                  return Center(
+                                    child: Text(
+                                      'Loading...',
+                                      style:
+                                          TextStyle(color: MyColors.textWhite),
+                                    ),
+                                  );
+                                }
+                              },
+                            )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))),
+        ),
+      ),
+    );
   }
 }
