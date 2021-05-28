@@ -7,14 +7,14 @@ import 'package:movie_app/constant/constants.dart';
 import 'package:movie_app/constant/my_share_preferences.dart';
 import 'package:movie_app/event/movie_event.dart';
 import 'package:movie_app/model/movie.dart';
-import 'package:movie_app/model/movie_response.dart';
 import 'package:movie_app/state/movie_state.dart';
 import 'package:movie_app/widgets/appbar_widget.dart';
 import 'package:movie_app/widgets/background_image.dart';
 import 'package:movie_app/widgets/movie_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'movie_detail_page.dart';
+
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';
@@ -138,6 +138,11 @@ class _HomePageState extends State<HomePage> {
                                 likeClicked: () {
                                   _movieBloc.add(
                                       SaveMovieFavorite(movieList[index].id));
+                                },
+                                itemClicked: () {
+                                  bool liked = (favoriteList.contains(movieList[index].id.toString()));
+                                  Navigator.pushNamed(context, MovieDetailPage.routeName,
+                                      arguments: [movieList[index], liked]);
                                 },
                               );
                             },

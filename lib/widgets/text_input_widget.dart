@@ -27,25 +27,27 @@ class TextInputWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Center(
-        child: TextField(
-          textAlignVertical: TextAlignVertical.center,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.zero,
-            border: InputBorder.none,
-            hintText: hint,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Icon(
-                icon,
-                color: Colors.white,
-                size: 25,
+        child: Material(
+          child: TextField(
+            textAlignVertical: TextAlignVertical.center,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.zero,
+              border: InputBorder.none,
+              hintText: hint,
+              prefixIcon: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 25,
+                ),
               ),
+              hintStyle: sTextWhite,
             ),
-            hintStyle: sTextWhite,
+            style: sTextWhite,
+            keyboardType: inputType,
+            textInputAction: inputAction,
           ),
-          style: sTextWhite,
-          keyboardType: inputType,
-          textInputAction: inputAction,
         ),
       ),
     );

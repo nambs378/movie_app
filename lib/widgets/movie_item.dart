@@ -13,13 +13,15 @@ import 'dart:async';
 class MovieItem extends StatelessWidget {
   final Movie movie;
   final Function likeClicked;
+  final Function itemClicked;
   final List<String> favorited;
 
   const MovieItem(
       {Key? key,
       required this.movie,
       required this.likeClicked,
-      required this.favorited})
+      required this.favorited,
+      required this.itemClicked})
       : super(key: key);
 
   Future<ui.Image> _getImage() {
@@ -44,8 +46,10 @@ class MovieItem extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
           child: InkWell(
+              key: Key('inkwell_navigation_push'),
               onTap: () {
-                Navigator.pushNamed(context, MovieDetailPage.routeName, arguments: [movie, liked]);
+                itemClicked();
+
               },
               splashColor: MyColors.orange.withOpacity(0.5),
               child: Container(
@@ -98,44 +102,21 @@ class MovieItem extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        child: Material(
-                                          color: MyColors.buttonOrange
-                                              .withOpacity(0),
-                                          child: Ink(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(3)),
-                                            child: InkWell(
-                                              onTap: () {
-                                                likeClicked();
-                                              },
-                                              splashColor: MyColors.white
-                                                  .withOpacity(0.3),
-                                              child: Container(
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons
-                                                          .remove_red_eye_rounded,
-                                                      color: MyColors.orange,
-                                                      size: 13,
-                                                    ),
-                                                    TextCustomWidget(
-                                                        value: "${movie.views}",
-                                                        size: 13,
-                                                        color:
-                                                            MyColors.textGray,
-                                                        edgeInsets:
-                                                            EdgeInsets.only(
-                                                                left: 3)),
-                                                  ],
-                                                ),
-                                              ),
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.remove_red_eye_rounded,
+                                              color: MyColors.orange,
+                                              size: 13,
                                             ),
-                                          ),
+                                            TextCustomWidget(
+                                                value: "${movie.views}",
+                                                size: 13,
+                                                color: MyColors.textGray,
+                                                edgeInsets:
+                                                    EdgeInsets.only(left: 3)),
+                                          ],
                                         ),
                                       ),
                                       ClipRRect(
@@ -152,6 +133,7 @@ class MovieItem extends StatelessWidget {
                                                   borderRadius:
                                                       BorderRadius.circular(3)),
                                               child: InkWell(
+                                                key: Key('inkwell_favorite'),
                                                 onTap: () {
                                                   likeClicked();
                                                 },
@@ -168,19 +150,21 @@ class MovieItem extends StatelessWidget {
                                                         color: MyColors.orange,
                                                         size: 13,
                                                       ),
-                                                      TextCustomWidget(
-                                                          value: liked
-                                                              ? "Liked"
-                                                              : "Like",
-                                                          size: 13,
-                                                          color: liked
-                                                              ? MyColors
-                                                                  .textOrange
-                                                              : MyColors
-                                                                  .textGray,
-                                                          edgeInsets:
-                                                              EdgeInsets.only(
-                                                                  left: 3))
+                                                      Flexible(
+                                                        child: TextCustomWidget(
+                                                            value: liked
+                                                                ? "Liked"
+                                                                : "Like",
+                                                            size: 13,
+                                                            color: liked
+                                                                ? MyColors
+                                                                    .textOrange
+                                                                : MyColors
+                                                                    .textGray,
+                                                            edgeInsets:
+                                                                EdgeInsets.only(
+                                                                    left: 3)),
+                                                      )
                                                     ],
                                                   ),
                                                 ),

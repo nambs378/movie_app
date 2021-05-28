@@ -181,8 +181,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                             _RichTextCustom(
                                                 EdgeInsets.only(top: 10),
                                                 "Duration",
-                                                "${widget.movie.duration} phút" ??
-                                                    "empty"),
+                                                "${widget.movie.duration} phút"),
                                             Container(
                                               margin: EdgeInsets.only(top: 15),
                                               child: Container(
